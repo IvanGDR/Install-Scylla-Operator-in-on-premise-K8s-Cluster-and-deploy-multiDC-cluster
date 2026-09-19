@@ -5,7 +5,7 @@ Following documentation for creating a K8s cluster
 
 Our next step is to be able to install ScyllaDB on this cluster using Scylla Operator, for this we need to prepare the cluster so ScyllaDB cluster/nodes can be deployed accordingly.
 
-Currently it is only supported to deploy ScyllaDB via Operator on especific Cloud Enviroenments. In general we need to follow operator installation and pre-requisites accordingly
+Currently it is only supported to deploy ScyllaDB via Operator on specific Cloud Environments. In general we need to follow operator installation and pre-requisites accordingly
 
 [Scylla Operator - Deploy MultiDC](https://operator.docs.scylladb.com/stable/deploy-scylladb/deploy-multi-datacenter-cluster.html)
 
@@ -43,7 +43,7 @@ scylla-ivan-k8s-2-europe-west2-c-1	[{"effect":"NoSchedule","key":"scylla-operato
 ```
 note: Only nodes with taint in place are shown.
 
-To see all taints, accross the k8s cluster, including master node:
+To see all taints, across the k8s cluster, including master node:
 
 ```
 $ kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints
@@ -75,7 +75,7 @@ $ kubectl label nodes scylla-ivan-k8s-2-europe-west2-c-1 topology.kubernetes.io/
 
 The nodes get tagged with metadata (scylla.scylladb.com/node-type=scylla) on both nodes and then each worker node respectively with (topology.kubernetes.io/zone=europe-west2-b or topology.kubernetes.io/zone=europe-west2-c) so other Kubernetes objects can select on. Unlike a taint, a label doesn't block or restrict anything by itself — it's purely informational/selectable.
 
-To confim labels:
+To confirm labels:
 
 ```
 $ kubectl get nodes -L topology.kubernetes.io/zone,scylla.scylladb.com/node-type
@@ -98,7 +98,7 @@ Taint → keeps everything else off the node.
 Label → lets you explicitly target the node for ScyllaDB pods.
 
 
-**c) Dealing with CPU pinning in on-premise k8s enviroenment:**
+**c) Dealing with CPU pinning in on-premise k8s environment:**
 https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#changing-the-cpu-manager-policy
 
 before deploying the cluster:
@@ -118,7 +118,7 @@ systemReserved:
 cpuManagerReconcilePeriod: 0s
 ```
 
-in the same directory remove file cpu_manager_state (this wil be regenarate once kubelet restart)
+in the same directory remove file cpu_manager_state (this will be regenerated once kubelet restart)
 Then re-start 
 ```
 $kubelet sudo systemctl start kubelet
@@ -250,7 +250,7 @@ users:
     client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFtLS0tCk1JSURLVENDQWhHZ0F3SUJBZ0lJSUdtLS1CRUd...
 ```
 
-Also create enviroenment variables to reference contexts
+Also create environment variables to reference contexts
 ```
 $ export CONTEXT_DC1=dc1
 $ export CONTEXT_DC2=dc2
@@ -543,7 +543,7 @@ $ kubectl -n scylla edit scyllaclusters.scylla.scylladb.com scylla-cluster
 In other words, node in `europe-west2-b-dc1` DC, won't show any external seed(s).
 
 
-For completenes, we should keep nodes from both DC in the seed list, therefore, proceed to edit both ScyllaDB object deployments and include the seeds as required. Furthermore, instead of using plain IPs (IPs are ephemeral) and since it's one k8s cluster, cross-namespace DNS resolution (scylla.svc.cluster.local reachable from scylla2, and vice versa, scylla) works out of the box — no special networking needed there.
+For completeness, we should keep nodes from both DC in the seed list, therefore, proceed to edit both ScyllaDB object deployments and include the seeds as required. Furthermore, instead of using plain IPs (IPs are ephemeral) and since it's one k8s cluster, cross-namespace DNS resolution (scylla.svc.cluster.local reachable from scylla2, and vice versa, scylla) works out of the box — no special networking needed there.
 
 To get cross DNS resolution:
 
