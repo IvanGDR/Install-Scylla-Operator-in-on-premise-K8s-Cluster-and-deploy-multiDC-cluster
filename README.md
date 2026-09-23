@@ -576,8 +576,8 @@ at the end both files with:
     nodeService:
       type: Headless
   externalSeeds:
-  - scylla-cluster-europe-west2-b-dc1-b-0.scylla-cluster-client.scylla.svc.cluster.local
-  - scylla-cluster-europe-west2-c-dc2-c-0.scylla-cluster-
+  - scylla-cluster-europe-west2-b-dc1-b-0.scylla.svc.cluster.local
+  - scylla-cluster-europe-west2-c-dc2-c-0.scylla2.svc.cluster.local
   repository: docker.io/scylladb/scylla
   version: 2026.2.2
 ```
